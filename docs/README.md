@@ -12,6 +12,7 @@ Background research for the NLP final project. These docs are the **shared conte
 | 2 | [02-spacy.md](02-spacy.md) | spaCy = linguistic structure layer: **NER** (brands, money, durations), **noun chunks** → aspects, **lemmas**, **dependency parse** → aspect-opinion pairs |
 | 3 | [03-dataset.md](03-dataset.md) | **Amazon Reviews 2023 (All_Beauty)** reviews + metadata joined on `parent_asin`; CC0 Women's Clothing Reviews as backup; there are no real sales figures, so use proxy metrics |
 | 4 | [04-netlify-deployment.md](04-netlify-deployment.md) | Netlify runs Python **only at build time**. Functions are TS/JS/Go only. Pyodide has NLTK but **not spaCy** → recommended architecture and config |
+| — | [expert-roster.md](expert-roster.md) | The 13 agents (incl. Orchestrator, Meta, **NLTK Expert**, **spaCy Expert**) with job lines, agent cards and a shared-skill matrix |
 
 ## Key decisions (TL;DR for every agent)
 
@@ -24,17 +25,9 @@ Background research for the NLP final project. These docs are the **shared conte
 4. **Architecture:** **Netlify build runs the Python NLTK + spaCy pipeline → writes static JSON → static dashboard.** There is also an in-browser **Pyodide + NLTK playground** for live VADER, tokens and collocations on pasted text. spaCy is shown live only through pre-rendered `displacy` HTML and precomputed results.
 5. **Don't build:** Python Netlify Functions (unsupported), a Flask or FastAPI server on Netlify (impossible), or `micropip install spacy` in Pyodide (fails). Live spaCy on user text is an optional stretch goal and needs an external Python host.
 
-## Suggested agent team (next step)
+## Agent team
 
-| Agent | Owns | Primary docs |
-|---|---|---|
-| Data engineer | `scripts/prepare_data.py`, sampling, schema, fixtures | 03 |
-| NLTK specialist | `analyzer/nltk_layer.py`, VADER evaluation vs. star ratings | 01 |
-| spaCy specialist | `analyzer/spacy_layer.py`, aspect extraction, EntityRuler, displacy exports | 02 |
-| Analytics / metrics | `analyzer/metrics.py`, performance score, trends, opportunity flags | 03 |
-| Frontend | `site/` dashboard, product pages, Pyodide playground | 04, 01 |
-| DevOps / Netlify | `netlify.toml`, `requirements.txt`, build budget, deploy | 04 |
-| QA / report | pytest, evaluation metrics, write-up, limitations | all |
+See **[expert-roster.md](expert-roster.md)** for the full roster: 13 agents with job lines, owned files, handoffs, a shared-skill matrix, milestones and ground rules.
 
 ## Open items to verify during implementation
 - [x] Amazon Reviews 2023 license: confirmed **none declared** (no `license:` field on the HF card). Use it for academic, non-commercial work, with citation.
