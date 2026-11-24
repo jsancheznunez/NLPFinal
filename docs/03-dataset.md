@@ -33,7 +33,7 @@ It is free, downloads directly (no login), and is widely cited in academic NLP a
 | `images` | (ignore) |
 | `asin`, `parent_asin` | Product key. **Use `parent_asin` to join with metadata** (the dataset authors say so explicitly) |
 | `user_id` | Repeat-reviewer counts (optional) |
-| `timestamp` (ms since epoch) | Trends over time and review velocity |
+| `timestamp` (Unix **milliseconds**, verified against the real file) | Trends over time and review velocity |
 | `verified_purchase` | Filter or weight verified reviews; data-quality panel |
 | `helpful_vote` | Weight helpful reviews more; surface "most helpful complaint" |
 

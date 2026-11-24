@@ -68,7 +68,8 @@ If the team decides live spaCy is required, the only reliable option is an **ext
 **`netlify.toml`**
 ```toml
 [build]
-  command = "pip install -r requirements.txt && python scripts/build_analysis.py"
+  # Netlify runs `pip install` on requirements.txt automatically, so the command only runs the pipeline
+  command = "python scripts/build_analysis.py"
   publish = "site"
 
 [build.environment]
@@ -82,12 +83,13 @@ If the team decides live spaCy is required, the only reliable option is an **ext
     Cache-Control = "public, max-age=3600"
 ```
 
-**`requirements.txt`** (pin exact versions once tested locally)
+**`requirements.txt`** (verified Nov 2026; see `knowledge/build-pipeline-engineer/requirements-and-pins.md`)
 ```
-nltk==3.9.*
-spacy==3.8.*
+nltk==3.9.4            # must equal the NLTK in Pyodide 314.0.8 (PyPI latest 3.10.x is NOT in Pyodide)
+spacy>=3.8.0,<3.9.0    # en_core_web_sm 3.8.0 requires this range
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
 pandas
+jsonschema
 ```
 
 **In-browser NLTK (playground) sketch**
@@ -108,7 +110,7 @@ sia = SentimentIntensityAnalyzer()
   window.score = (t) => py.runPython(`sia.polarity_scores(${JSON.stringify(t)})`).toJs();
 </script>
 ```
-*Verify the exact Pyodide version string and CDN path on the Pyodide docs when implementing. Pyodide moved to a new version-numbering scheme, and the docs currently show `314.0.8`. A Web Worker is recommended so the UI doesn't freeze while Pyodide loads (~10 MB download, a few seconds on first visit).*
+*Verified: the CDN path `https://cdn.jsdelivr.net/pyodide/v314.0.8/full/` returns 200. Its lockfile says Python **3.14.2** and `nltk 3.9.4`, which depends on `regex`. The production version must run in a **module** Web Worker (`pyodide.mjs`), as the Pyodide docs require. The full worker pattern is in `knowledge/pyodide-engineer/web-worker.md`.*
 
 ### Build budget notes
 - Keep the build NLP step to a few minutes: sample about 10–50k reviews and run `nlp.pipe(batch_size=256)` with unused components disabled. Netlify's current docs don't publish a build timeout figure. Check it in the Netlify UI for your plan. On credit-based plans, each **production deploy costs 15 credits** (build minutes are no longer counted), so avoid pushing to the production branch for every small change, and use Deploy Previews or local runs instead.

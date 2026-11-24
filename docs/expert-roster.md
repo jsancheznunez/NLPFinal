@@ -6,6 +6,8 @@
 
 So every role below maps to one of three places code actually runs: the **Python build step**, the **static site**, or **Pyodide in the browser**. None of the roles is for a backend server, database, Python Netlify Function or cloud ML service.
 
+> **Built as Claude Code project files:** each role below is a subagent in `.claude/agents/<agent>.md`, using these names: `orchestrator`, `meta-agent`, `solution-architect`, `data-engineer`, `nltk-expert`, `spacy-expert`, `metrics-engineer`, `build-pipeline-engineer`, `frontend-engineer`, `pyodide-engineer`, `netlify-engineer`, `qa-engineer`, `eval-report-writer`. Each skill S01–S24 is `.claude/skills/<skill-name>/SKILL.md`, and each agent preloads its skills. Its reference notes are in `knowledge/<agent>/`. Names, personalities and models are in [agent-brains.md](agent-brains.md).
+
 ---
 
 ## 1. Roster at a glance

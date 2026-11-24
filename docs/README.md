@@ -13,6 +13,7 @@ Background research for the NLP final project. These docs are the **shared conte
 | 3 | [03-dataset.md](03-dataset.md) | **Amazon Reviews 2023 (All_Beauty)** reviews + metadata joined on `parent_asin`; CC0 Women's Clothing Reviews as backup; there are no real sales figures, so use proxy metrics |
 | 4 | [04-netlify-deployment.md](04-netlify-deployment.md) | Netlify runs Python **only at build time**. Functions are TS/JS/Go only. Pyodide has NLTK but **not spaCy** → recommended architecture and config |
 | — | [expert-roster.md](expert-roster.md) | The 13 agents (incl. Orchestrator, Meta, **NLTK Expert**, **spaCy Expert**) with job lines, agent cards and a shared-skill matrix |
+| — | [agent-brains.md](agent-brains.md) | Agent names, personalities, models (6 opus / 6 sonnet / 1 haiku) and preloaded skills |
 
 ## Key decisions (TL;DR for every agent)
 
@@ -27,12 +28,15 @@ Background research for the NLP final project. These docs are the **shared conte
 
 ## Agent team
 
-See **[expert-roster.md](expert-roster.md)** for the full roster: 13 agents with job lines, owned files, handoffs, a shared-skill matrix, milestones and ground rules.
+- **[expert-roster.md](expert-roster.md)**: the 13 roles, owned files, handoffs, the shared-skill matrix, milestones and ground rules.
+- **[agent-brains.md](agent-brains.md)**: each agent's name, personality, model and preloaded skills, and how knowledge loading is enforced.
+- Built as Claude Code project files: `.claude/agents/` (13 subagents), `.claude/skills/` (24 skills), `knowledge/<agent>/` (sourced reference notes), and `/CLAUDE.md` (team overview).
 
 ## Open items to verify during implementation
 - [x] Amazon Reviews 2023 license: confirmed **none declared** (no `license:` field on the HF card). Use it for academic, non-commercial work, with citation.
-- [ ] Exact Pyodide CDN version path, after the switch to the `314.x` version scheme.
+- [x] Pyodide CDN path: `https://cdn.jsdelivr.net/pyodide/v314.0.8/full/` (verified). It runs Python 3.14.2 with nltk 3.9.4.
 - [ ] Netlify build time limit on the team's plan (not published in the docs), and the end-to-end build time with the chosen sample size. Note that production deploys cost 15 credits each.
-- [ ] Exact pinned versions of `spacy` and `en_core_web_sm` (they must be compatible) and `nltk`.
+- [x] Pins: `nltk==3.9.4` (matches Pyodide), `spacy>=3.8.0,<3.9.0` with the `en_core_web_sm` 3.8.0 wheel (verified from the spacy-models metadata).
+- [x] Dataset fields checked against the real files: `timestamp` is Unix **milliseconds**, and the fields are `helpful_vote` and `parent_asin`. `price` and `bought_together` can be null.
 
 *Researched November 2026. Sources are listed at the bottom of each doc.*
