@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>How it works | Product Performance Analyzer</title>
-  <meta name="description" content="Ecommerce Product Performance Analyzer: NLTK + spaCy analysis of Amazon Reviews 2023 (All_Beauty), built on Netlify.">
+  <meta name="description" content="Ecommerce Product Performance Analyzer: NLTK + spaCy analysis of Amazon Reviews 2023 (Grocery_and_Gourmet_Food), built on Netlify.">
   <link rel="stylesheet" href="assets/style.css">
   
   <script src="assets/common.js" defer></script>
@@ -39,7 +39,7 @@
     <section class="panel" data-source="metrics">
       <h2><span>Pipeline</span></h2>
       <ol>
-        <li><strong>Data.</strong> A committed sample of Amazon Reviews 2023 (All_Beauty): reviews and metadata joined on <code>parent_asin</code> (<code>data/sample/</code>).</li>
+        <li><strong>Data.</strong> A committed sample of Amazon Reviews 2023 (Grocery_and_Gourmet_Food): reviews and metadata joined on <code>parent_asin</code> (<code>data/sample/</code>).</li>
         <li><span class="badge badge-spacy" data-badge="spacy">spaCy</span> <code>en_core_web_sm</code> 3.8.0 runs once over every review with <code>nlp.pipe</code>: lemmas, sentences, named entities (plus an <code>EntityRuler</code> placed before <code>ner</code> with BRAND/PRODUCT phrase patterns from the metadata), noun chunks, and dependency rules (<code>amod</code>; <code>acomp</code> + <code>nsubj</code>; opinion verb + <code>dobj</code>; <code>conj</code>; <code>neg</code>) that yield (aspect, opinion, negated) pairs.</li>
         <li><span class="badge badge-nltk" data-badge="nltk">NLTK</span> 3.9.4: VADER scores each review and each aspect opinion (positive &ge; 0.05, negative &le; &minus;0.05); FreqDist counts spaCy lemmas; bigram collocations are ranked by likelihood ratio with a frequency filter, separately for positive and negative reviews. The stopword list is NLTK English minus negations plus ecommerce noise words.</li>
         <li><span class="badge badge-metrics" data-badge="metrics">Metrics (proxy)</span> pandas computes the best-seller proxy, Bayesian rating, review velocity, the performance score and opportunity flags.</li>
@@ -83,7 +83,7 @@
       <p>NLP final project. <strong>NLTK</strong> (VADER, FreqDist, collocations) runs at build time and in your browser via Pyodide;
         <strong>spaCy</strong> (NER, EntityRuler, noun chunks, dependency aspects) runs only in the Netlify build.
         Sales figures are <strong>proxies</strong> (rating counts, review velocity); no simulated data is used.</p>
-      <p>Data: Amazon Reviews 2023, All_Beauty sample. Hou, Y., Li, J., He, Z., Yan, A., Chen, X., &amp; McAuley, J. (2024).
+      <p>Data: Amazon Reviews 2023, Grocery_and_Gourmet_Food sample. Hou, Y., Li, J., He, Z., Yan, A., Chen, X., &amp; McAuley, J. (2024).
         <em>Bridging Language and Items for Retrieval and Recommendation.</em> <a href="https://arxiv.org/abs/2403.03952">arXiv:2403.03952</a>.
         No license is declared; used for academic, non-commercial purposes only.</p>
     </div>

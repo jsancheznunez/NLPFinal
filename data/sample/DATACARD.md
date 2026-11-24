@@ -5,10 +5,10 @@ Never regenerated on Netlify: the build reads these committed files only.
 
 ## Source
 - Dataset: **Amazon Reviews 2023** (McAuley Lab), https://amazon-reviews-2023.github.io/
-- Category: **All_Beauty** (reviews: 700,808 over 112,496 products in the raw file)
-- Reviews: https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/review_categories/All_Beauty.jsonl.gz
-- Metadata: https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/meta_categories/meta_All_Beauty.jsonl.gz
-- Why All_Beauty: the category named in docs/03-dataset.md. Streaming it (94 MB reviews + 40 MB metadata) took well under a minute, so a smaller category was not needed.
+- Category: **Grocery_and_Gourmet_Food** (reviews: 14,301,719 over 602,835 products in the raw file)
+- Reviews: https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/review_categories/Grocery_and_Gourmet_Food.jsonl.gz
+- Metadata: https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/meta_categories/meta_Grocery_and_Gourmet_Food.jsonl.gz
+- Category chosen with `--category Grocery_and_Gourmet_Food` (switched from All_Beauty). The raw files (1.6 GB reviews + 0.3 GB metadata) were cached in `data/raw/` (gitignored) and streamed twice.
 
 ## Sampling
 - Top 150 products by number of non-empty reviews (150 kept with metadata), plus 50 random long-tail products with >= 20 reviews (50 kept), drawn with `random.Random(42)`.
@@ -18,11 +18,11 @@ Never regenerated on Netlify: the build reads these committed files only.
 ## Contents
 | File | Rows |
 |---|---|
-| reviews.jsonl | 10,755 reviews |
-| meta.jsonl | 200 products (86 with a price; `price` is null otherwise) |
+| reviews.jsonl | 11,233 reviews |
+| meta.jsonl | 200 products (149 with a price; `price` is null otherwise) |
 
-- Date range: 2006-03-07 to 2023-09-04 (field `timestamp`, Unix **milliseconds**).
-- Star distribution: 1★ 1,340, 2★ 619, 3★ 809, 4★ 1,154, 5★ 6,833.
+- Date range: 2005-09-18 to 2023-08-27 (field `timestamp`, Unix **milliseconds**).
+- Star distribution: 1★ 1,156, 2★ 577, 3★ 621, 4★ 1,010, 5★ 7,869.
 - Review fields: parent_asin, asin, rating, title, text, timestamp, helpful_vote, verified_purchase, user_id.
 - Metadata fields: parent_asin, title, store, price, average_rating, rating_number, main_category, categories, features (`features` truncated to 5 bullets).
 

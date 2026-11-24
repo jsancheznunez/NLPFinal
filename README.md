@@ -4,7 +4,7 @@ An NLP final project that analyzes online products from their customer reviews a
 
 - Live pages: Dashboard, Products, Product detail, Aspects, Trends, **Analyze your own review** (live NLTK in the browser), How it works, [Resources](site/resources.html)
 - Step-by-step guide: [docs/GUIDE.md](docs/GUIDE.md)
-- Evaluation: [docs/evaluation.md](docs/evaluation.md) (VADER vs. stars: macro-F1 0.507 on 3 classes, 0.782 positive vs. negative)
+- Evaluation: [docs/evaluation.md](docs/evaluation.md) (VADER vs. stars: macro-F1 0.522 on 3 classes, 0.804 positive vs. negative)
 
 ## How NLTK and spaCy are used
 
@@ -37,7 +37,7 @@ browser ─▶ static pages + Chart.js 4.5.1 read site/data/*.json
 
 | Path | Contents |
 |---|---|
-| `data/sample/` | committed sample: 10,755 reviews of 200 All_Beauty products, `meta.jsonl`, `DATACARD.md` |
+| `data/sample/` | committed sample: 11,233 reviews of 200 Grocery_and_Gourmet_Food products, `meta.jsonl`, `DATACARD.md` |
 | `analyzer/` | `nltk_layer.py`, `spacy_layer.py`, `metrics.py`, `contract.py` (schema validation) |
 | `schemas/` | JSON Schema 2020-12 contract for every file in `site/data/` |
 | `scripts/` | `prepare_data.py` (one-time sampling), `build_analysis.py` (Netlify build), `evaluate.py` |
@@ -96,7 +96,7 @@ No environment variables, secrets, Functions or extra headers need to be set in 
 
 ## Dataset, citation and license
 
-Amazon Reviews 2023 (McAuley Lab), category All_Beauty: https://amazon-reviews-2023.github.io/
+Amazon Reviews 2023 (McAuley Lab), category Grocery_and_Gourmet_Food: https://amazon-reviews-2023.github.io/
 
 > Hou, Y., Li, J., He, Z., Yan, A., Chen, X., & McAuley, J. (2024). *Bridging Language and Items for Retrieval and Recommendation.* arXiv:2403.03952.
 

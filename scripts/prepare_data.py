@@ -2,7 +2,8 @@
 
 Run locally, ONCE. Never on Netlify (the build only reads data/sample/).
 
-    python scripts/prepare_data.py                 # All_Beauty sample + fixtures
+    python scripts/prepare_data.py                 # All_Beauty sample + fixtures (default)
+    python scripts/prepare_data.py --category Grocery_and_Gourmet_Food --skip-fixtures   # current sample
     python scripts/prepare_data.py --skip-fixtures
 
 The raw .jsonl.gz files are streamed from mcauleylab.ucsd.edu into a gitignored
@@ -155,7 +156,7 @@ Never regenerated on Netlify: the build reads these committed files only.
 - Category: **{stats['category']}** (reviews: {stats['raw_reviews']:,} over {stats['raw_products']:,} products in the raw file)
 - Reviews: {review_url(stats['category'])}
 - Metadata: {meta_url(stats['category'])}
-- Why All_Beauty: the category named in docs/03-dataset.md. Streaming it (94 MB reviews + 40 MB metadata) took well under a minute, so a smaller category was not needed.
+- Category chosen with `--category` (default All_Beauty). The raw files are cached in `data/raw/` (gitignored) and streamed twice.
 
 ## Sampling
 - Top {args.n_top} products by number of non-empty reviews ({stats['n_top']} kept with metadata), plus {args.n_tail} random long-tail products with >= {args.tail_min} reviews ({stats['n_tail']} kept), drawn with `random.Random({SEED})`.

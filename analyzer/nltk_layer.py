@@ -42,17 +42,18 @@ DOMAIN_STOPWORDS = frozenset({
     "first", "two", "way", "say", "think", "know", "go", "take",
 })
 
-# Beauty/ecommerce words missing from the VADER lexicon (checked against nltk 3.9.4's
+# Grocery/ecommerce words missing from the VADER lexicon (checked against nltk 3.9.4's
 # vader_lexicon). Valences on VADER's -4..+4 scale, set conservatively by the team.
 # Applied with setdefault, so existing VADER ratings are never overridden. Shared by the
 # build and the browser, so scores stay identical. Evaluated in docs/evaluation.md.
 DOMAIN_LEXICON = {
-    "flimsy": -1.8, "cheap": -0.8, "cheaply": -1.5, "greasy": -1.4, "sticky": -1.0, "leaky": -1.6,
-    "leaking": -1.4, "leaks": -1.2, "flaky": -1.1, "smelly": -1.6, "overpriced": -1.9, "burning": -1.2,
-    "streaky": -1.3, "clumpy": -1.3, "patchy": -1.2, "chipped": -1.1, "peeling": -1.0, "scratchy": -1.2,
-    "frizzy": -1.0, "refund": -0.8,
-    "soft": 1.2, "smooth": 1.2, "silky": 1.6, "shiny": 1.1, "sturdy": 1.4, "durable": 1.4,
-    "lightweight": 0.8, "moisturizing": 1.2, "hydrating": 1.2, "nourishing": 1.3,
+    "stale": -1.6, "bland": -1.2, "soggy": -1.3, "expired": -1.6, "moldy": -2.0, "mouldy": -2.0,
+    "spoiled": -1.8, "spoilt": -1.8, "tasteless": -1.6, "flavorless": -1.5, "watery": -1.0,
+    "chalky": -1.1, "gritty": -0.9, "mushy": -1.0, "rubbery": -1.0, "burnt": -1.3, "greasy": -1.4,
+    "aftertaste": -0.8, "melted": -0.8, "dented": -0.9, "leaking": -1.4, "leaky": -1.6,
+    "flimsy": -1.8, "cheaply": -1.5, "overpriced": -1.9, "refund": -0.8,
+    "tasty": 1.9, "flavorful": 1.6, "flavourful": 1.6, "crunchy": 1.0, "crispy": 1.0, "juicy": 1.1,
+    "savory": 1.1, "creamy": 1.0, "aromatic": 1.0, "wholesome": 1.2, "hearty": 1.1, "smooth": 1.2,
 }
 # Bare negations are kept for collocations ("not worth") but are not useful as single top terms.
 NEGATION_TERMS = frozenset({"not", "no", "nor", "never"})

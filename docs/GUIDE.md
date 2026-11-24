@@ -22,15 +22,16 @@ NLTK must stay at 3.9.4, the version inside Pyodide 314.0.8, so the browser and 
 The sample in `data/sample/` is committed, so you can skip this step. To regenerate it:
 
 ```bash
-python scripts/prepare_data.py
+python scripts/prepare_data.py --category Grocery_and_Gourmet_Food --skip-fixtures
 ```
 
-This streams `All_Beauty.jsonl.gz` and `meta_All_Beauty.jsonl.gz` from mcauleylab.ucsd.edu into `data/raw/` (gitignored). It then keeps the top 150 products plus 50 random long-tail products, up to 60 reviews each (seed 42), and rewrites `data/sample/` and `tests/fixtures/`. Expected output:
+This streams `Grocery_and_Gourmet_Food.jsonl.gz` (1.6 GB) and `meta_Grocery_and_Gourmet_Food.jsonl.gz` (0.3 GB) from mcauleylab.ucsd.edu into `data/raw/` (gitignored). It then keeps the top 150 products plus 50 random long-tail products, up to 60 reviews each (seed 42), and rewrites `data/sample/`. `--skip-fixtures` leaves the small test set in `tests/fixtures/` unchanged. Expected output:
 
 ```
-sample: 10755 reviews, 200 products -> .../data/sample
-fixtures: 30 reviews, 5 products -> .../tests/fixtures
+sample: 11233 reviews, 200 products -> .../data/sample
 ```
+
+To use another Amazon Reviews 2023 category, pass its name to `--category` (e.g. `All_Beauty`, the script's default), then update the domain word list `DOMAIN_LEXICON` in `analyzer/nltk_layer.py`, the example reviews (`CURATED`) in `scripts/build_analysis.py`, and the category name in the page footers in `site/*.html`. The build reads the category label from `data/sample/DATACARD.md`.
 
 Never run this on Netlify. The build only reads the committed sample.
 
@@ -46,7 +47,7 @@ This is the same command Netlify runs. It:
 3. validates every output against `schemas/*.schema.json`, stopping with an error if one fails
 4. writes `site/data/`, `site/displacy/`, `site/py/nltk_layer.py` and `site/nltk_data/`
 
-The log ends with a line like `[build] total: 45.10s (budget 600s); 205 JSON files, 7 displaCy files, 11839 aspect pairs`.
+The log ends with a line like `[build] total: 51.06s (budget 600s); 205 JSON files, 7 displaCy files, 14248 aspect pairs`.
 
 ## 4. Preview
 

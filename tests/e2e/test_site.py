@@ -112,7 +112,7 @@ def test_playground_matches_build_scores(page: Page, site_server, console_errors
         assert float(page.locator("#parity").get_attribute("data-diff")) <= 1e-4
         expect(page.locator("#results section.panel[data-source='nltk'] .badge").first).to_have_text("NLTK")
     # free text: the box returns a score and labels it NLTK
-    page.fill("#review-input", "This mascara is not good. It clumps and flakes.")
+    page.fill("#review-input", "This coffee is not good. It tastes stale and bitter.")
     page.get_by_role("button", name="Analyze").click()
     expect(page.locator("#out-label")).to_have_text("negative", timeout=60_000)
     assert not console_errors

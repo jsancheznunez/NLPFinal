@@ -39,11 +39,11 @@ PRICE_ASPECTS = {"price", "value", "cost", "money"}
 
 # Hand-written texts for the playground's example buttons and the build/browser parity test.
 CURATED = [
-    ("curated-positive", "Absolutely love this serum! My skin feels soft and the smell is amazing. Will buy again :)"),
-    ("curated-negative", "Terrible quality. The pump broke after two days and the cream smells awful. Not worth the price."),
-    ("curated-mixed", "The color is beautiful, but the brush is cheap and the bottle leaked everywhere."),
-    ("curated-negation", "Not bad at all, though it isn't great either. The scent is not too strong."),
-    ("curated-neutral", "Arrived on Tuesday. The package contains one bottle of shampoo and one conditioner."),
+    ("curated-positive", "Absolutely love this coffee! It tastes rich and smooth and the aroma is amazing. Will buy again :)"),
+    ("curated-negative", "Terrible quality. The bag arrived torn and the crackers were stale. Not worth the price."),
+    ("curated-mixed", "The flavor is delicious, but the packaging is cheap and the jar leaked everywhere."),
+    ("curated-negation", "Not bad at all, though it isn't great either. The sauce is not too spicy."),
+    ("curated-neutral", "Arrived on Tuesday. The box contains two bags of rice and one bottle of olive oil."),
 ]
 
 
@@ -197,6 +197,16 @@ def pick_displacy_sentences(reviews, feats, compounds, n: int = 6) -> list:
 
 
 # --------------------------------------------------------------------------- main
+def sample_category(data_dir: Path) -> str:
+    """Category name recorded by prepare_data.py in DATACARD.md ("- Category: **X**")."""
+    card = data_dir / "DATACARD.md"
+    if card.is_file():
+        for line in card.read_text(encoding="utf-8").splitlines():
+            if line.startswith("- Category: **"):
+                return line.split("**")[1]
+    return "unknown"
+
+
 def build(data_dir: Path, site: Path, nltk_dir: Path, budget: float) -> dict:
     timings = {}
     t0 = time.perf_counter()
@@ -386,7 +396,7 @@ def build(data_dir: Path, site: Path, nltk_dir: Path, budget: float) -> dict:
     opportunities.sort(key=lambda o: (o["flag"], o["parent_asin"]))
     outputs["summary.json"] = ("summary", {
         "schema_version": "1.0", "metric_kind": "proxy",
-        "dataset": {"name": "Amazon Reviews 2023 (McAuley Lab)", "category": "All_Beauty",
+        "dataset": {"name": "Amazon Reviews 2023 (McAuley Lab)", "category": sample_category(data_dir),
                     "citation": DATASET_CITATION, "url": "https://amazon-reviews-2023.github.io/",
                     "license_note": LICENSE_NOTE, "data_as_of": as_of.strftime("%Y-%m-%d"),
                     "n_products": len(rows), "n_reviews": len(reviews), "simulated": False},
