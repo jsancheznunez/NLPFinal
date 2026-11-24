@@ -1,0 +1,6 @@
+# Local/CI only. Netlify does NOT install this file.
+-r requirements.txt
+pytest>=8,<10
+pytest-playwright>=0.5,<1
+playwright==1.63.0     # matches the sandbox's pre-installed Chromium 1243 (browsers.json); elsewhere: python -m playwright install chromium
+scikit-learn>=1.5,<2   # evaluation only (scripts/evaluate.py)

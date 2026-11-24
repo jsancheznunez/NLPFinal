@@ -1,0 +1,8 @@
+# Netlify installs this file automatically (Python 3.12), then runs: python scripts/build_analysis.py
+# Must equal the NLTK version inside Pyodide 314.0.8 (pyodide-lock.json: nltk 3.9.4)
+nltk==3.9.4
+# spaCy 3.8.x <-> en_core_web_sm 3.8.0 (model meta: spacy_version ">=3.8.0,<3.9.0")
+spacy>=3.8.0,<3.9.0
+en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+pandas>=2.2,<4
+jsonschema>=4.23,<5
