@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nlpfinal.local/schemas/trends.schema.json",
+  "title": "trends.json: category time series and trending terms",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "metrics",
+    "nltk"
+  ],
+  "properties": {
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "metric_kind",
+        "monthly"
+      ],
+      "properties": {
+        "source": {
+          "const": "metrics"
+        },
+        "metric_kind": {
+          "const": "proxy"
+        },
+        "monthly": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "month",
+              "n_reviews",
+              "mean_rating"
+            ],
+            "properties": {
+              "month": {
+                "$ref": "nltk_analysis.schema.json#/$defs/month"
+              },
+              "n_reviews": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "mean_rating": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "nltk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "monthly_sentiment",
+        "trending_terms",
+        "window"
+      ],
+      "properties": {
+        "source": {
+          "const": "nltk"
+        },
+        "window": {
+          "type": "string"
+        },
+        "monthly_sentiment": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "month",
+              "n_reviews",
+              "mean_compound",
+              "pct_negative"
+            ],
+            "properties": {
+              "month": {
+                "$ref": "nltk_analysis.schema.json#/$defs/month"
+              },
+              "n_reviews": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "mean_compound": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "pct_negative": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "trending_terms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "term",
+              "recent_freq",
+              "previous_freq",
+              "delta",
+              "recent_count"
+            ],
+            "properties": {
+              "term": {
+                "type": "string"
+              },
+              "recent_freq": {
+                "type": "number"
+              },
+              "previous_freq": {
+                "type": "number"
+              },
+              "delta": {
+                "type": "number"
+              },
+              "recent_count": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

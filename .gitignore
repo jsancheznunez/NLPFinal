@@ -1,0 +1,36 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Raw dataset cache (prepare_data.py downloads here; never committed)
+data/raw/
+
+# NLTK data downloaded by the build (copied into site/nltk_data/)
+nltk_data/
+
+# Build outputs (Netlify regenerates them on every deploy)
+site/data/
+site/py/
+site/nltk_data/
+site/displacy/
+
+# Test artifacts
+test-results/
+playwright-report/
+.coverage
+htmlcov/
+
+# Local env / secrets / editor
+.env
+.env.*
+.netlify/
+.claude/settings.local.json
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nlpfinal.local/schemas/build_info.schema.json",
+  "title": "build_info.json: provenance and timings",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "commit_ref",
+    "context",
+    "python",
+    "versions",
+    "sample",
+    "timings",
+    "total_seconds",
+    "budget_seconds",
+    "outputs"
+  ],
+  "properties": {
+    "commit_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "context": {
+      "type": "string"
+    },
+    "python": {
+      "type": "string"
+    },
+    "versions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "nltk",
+        "spacy",
+        "en_core_web_sm",
+        "pandas",
+        "jsonschema"
+      ],
+      "properties": {
+        "nltk": {
+          "type": "string"
+        },
+        "spacy": {
+          "type": "string"
+        },
+        "en_core_web_sm": {
+          "type": "string"
+        },
+        "pandas": {
+          "type": "string"
+        },
+        "jsonschema": {
+          "type": "string"
+        }
+      }
+    },
+    "sample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n_products",
+        "n_reviews",
+        "data_dir"
+      ],
+      "properties": {
+        "n_products": {
+          "type": "integer"
+        },
+        "n_reviews": {
+          "type": "integer"
+        },
+        "data_dir": {
+          "type": "string"
+        }
+      }
+    },
+    "timings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0
+      }
+    },
+    "total_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "budget_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

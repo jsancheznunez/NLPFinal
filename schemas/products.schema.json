@@ -1,0 +1,307 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nlpfinal.local/schemas/products.schema.json",
+  "title": "products.json: one row per product",
+  "description": "Every product row is split into library-labelled sections: metrics (pandas proxies), nltk (VADER), spacy (entities) and aspects (spaCy extraction, scored by NLTK VADER).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "metric_kind",
+    "weights",
+    "products"
+  ],
+  "properties": {
+    "metric_kind": {
+      "const": "proxy"
+    },
+    "weights": {
+      "$ref": "#/$defs/weights"
+    },
+    "products": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/product_row"
+      }
+    }
+  },
+  "$defs": {
+    "weights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "popularity",
+        "adj_rating",
+        "sentiment",
+        "velocity"
+      ],
+      "properties": {
+        "popularity": {
+          "type": "number"
+        },
+        "adj_rating": {
+          "type": "number"
+        },
+        "sentiment": {
+          "type": "number"
+        },
+        "velocity": {
+          "type": "number"
+        }
+      }
+    },
+    "flag": {
+      "enum": [
+        "fix_top_complaint",
+        "under_marketed_gem",
+        "trending",
+        "price_value_mismatch"
+      ]
+    },
+    "metrics_section": {
+      "type": "object",
+      "required": [
+        "source",
+        "metric_kind",
+        "rating_number",
+        "average_rating",
+        "n_reviews",
+        "mean_rating",
+        "adj_rating",
+        "velocity",
+        "recent_reviews",
+        "best_seller_rank",
+        "score",
+        "rank",
+        "price_band",
+        "flags"
+      ],
+      "properties": {
+        "source": {
+          "const": "metrics"
+        },
+        "metric_kind": {
+          "const": "proxy"
+        },
+        "rating_number": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "average_rating": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "n_reviews": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "mean_rating": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "adj_rating": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "velocity": {
+          "type": "number",
+          "minimum": 0
+        },
+        "recent_reviews": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "best_seller_rank": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "score": {
+          "type": "number"
+        },
+        "rank": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "price_band": {
+          "enum": [
+            "low",
+            "mid-low",
+            "mid-high",
+            "high",
+            "unknown"
+          ]
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/flag"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "nltk_section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "mean_compound",
+        "pct_negative",
+        "sentiment_mix"
+      ],
+      "properties": {
+        "source": {
+          "const": "nltk"
+        },
+        "mean_compound": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "pct_negative": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "sentiment_mix": {
+          "$ref": "nltk_analysis.schema.json#/$defs/sentiment_mix"
+        }
+      }
+    },
+    "spacy_section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "n_entities",
+        "top_entities"
+      ],
+      "properties": {
+        "source": {
+          "const": "spacy"
+        },
+        "n_entities": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "top_entities": {
+          "type": "array",
+          "items": {
+            "$ref": "nltk_analysis.schema.json#/$defs/entity_item"
+          }
+        }
+      }
+    },
+    "aspects_section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "top_negative",
+        "top_positive"
+      ],
+      "properties": {
+        "source": {
+          "const": "spacy+nltk"
+        },
+        "top_negative": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/aspect_brief"
+          }
+        },
+        "top_positive": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/aspect_brief"
+          }
+        }
+      }
+    },
+    "aspect_brief": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "aspect",
+        "mentions",
+        "mean_compound"
+      ],
+      "properties": {
+        "aspect": {
+          "type": "string"
+        },
+        "mentions": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "mean_compound": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        }
+      }
+    },
+    "product_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "parent_asin",
+        "title",
+        "store",
+        "price",
+        "metrics",
+        "nltk",
+        "spacy",
+        "aspects"
+      ],
+      "properties": {
+        "parent_asin": {
+          "type": "string",
+          "pattern": "^[A-Z0-9]{10}$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "store": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "price": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "metrics": {
+          "$ref": "#/$defs/metrics_row"
+        },
+        "nltk": {
+          "$ref": "#/$defs/nltk_section"
+        },
+        "spacy": {
+          "$ref": "#/$defs/spacy_section"
+        },
+        "aspects": {
+          "$ref": "#/$defs/aspects_section"
+        }
+      }
+    },
+    "metrics_row": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/metrics_section"
+        }
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}
