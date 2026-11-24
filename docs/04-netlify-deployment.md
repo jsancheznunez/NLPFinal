@@ -111,7 +111,7 @@ sia = SentimentIntensityAnalyzer()
 *Verify the exact Pyodide version string and CDN path on the Pyodide docs when implementing. Pyodide moved to a new version-numbering scheme, and the docs currently show `314.0.8`. A Web Worker is recommended so the UI doesn't freeze while Pyodide loads (~10 MB download, a few seconds on first visit).*
 
 ### Build budget notes
-- Keep the build NLP step to a few minutes: sample about 10–50k reviews and run `nlp.pipe(batch_size=256)` with unused components disabled. Netlify builds have a time limit (15 minutes by default on most plans; *check the current plan limits in the Netlify UI*).
+- Keep the build NLP step to a few minutes: sample about 10–50k reviews and run `nlp.pipe(batch_size=256)` with unused components disabled. Netlify's current docs don't publish a build timeout figure. Check it in the Netlify UI for your plan. On credit-based plans, each **production deploy costs 15 credits** (build minutes are no longer counted), so avoid pushing to the production branch for every small change, and use Deploy Previews or local runs instead.
 - To make deploys faster, run `build_analysis.py` locally or in GitHub Actions and commit `site/data/*.json`. Then make the Netlify build command a no-op or a check. **Keep the default where the Netlify build runs the pipeline**, because "deployed and computed on Netlify" fits the brief best. The committed-JSON path is a fallback if builds get slow.
 
 ---

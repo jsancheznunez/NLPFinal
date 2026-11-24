@@ -37,9 +37,9 @@ Background research for the NLP final project. These docs are the **shared conte
 | QA / report | pytest, evaluation metrics, write-up, limitations | all |
 
 ## Open items to verify during implementation
-- [ ] The Amazon Reviews 2023 license field on the Hugging Face card. None was found in what we could read; treat it as academic and non-commercial use, with citation.
+- [x] Amazon Reviews 2023 license: confirmed **none declared** (no `license:` field on the HF card). Use it for academic, non-commercial work, with citation.
 - [ ] Exact Pyodide CDN version path, after the switch to the `314.x` version scheme.
-- [ ] Netlify build time limit on the team's plan, and the end-to-end build time with the chosen sample size.
+- [ ] Netlify build time limit on the team's plan (not published in the docs), and the end-to-end build time with the chosen sample size. Note that production deploys cost 15 credits each.
 - [ ] Exact pinned versions of `spacy` and `en_core_web_sm` (they must be compatible) and `nltk`.
 
 *Researched November 2026. Sources are listed at the bottom of each doc.*

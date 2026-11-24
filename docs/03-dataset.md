@@ -80,11 +80,11 @@ The Hugging Face mirror uses a dataset loading script (`trust_remote_code=True`)
 
 ### License and terms: what we found
 
-Neither the dataset website nor the Hugging Face card states an explicit license in the parts we could read. Common practice for the McAuley Lab Amazon datasets is **research and academic use, with the paper cited**. For a class project:
+**Confirmed (Nov 2026):** neither the dataset website nor the Hugging Face card declares a license. The card's YAML header has no `license:` field, and the Hub API returns no license tag. Common practice for the McAuley Lab Amazon datasets is **research and academic use, with the paper cited**. For a class project:
 - Cite the paper (above) in the README and the report.
 - Commit only a **small sample**. Don't redistribute the full dump.
 - Don't use it commercially.
-- *Action item for the data agent:* re-check the Hugging Face card's YAML `license:` field before submission and record what it says here.
+- Say in the report that no license is declared and that the data is used for non-commercial academic work, with citation.
 
 ### Important caveat: there are no sales numbers
 
