@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resources | Product Performance Analyzer</title>
+  <meta name="description" content="Ecommerce Product Performance Analyzer: NLTK + spaCy analysis of Amazon Reviews 2023 (All_Beauty), built on Netlify.">
+  <link rel="stylesheet" href="assets/style.css">
+  
+  <script src="assets/common.js" defer></script>
+
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">Product Performance Analyzer</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="aspects.html">Aspects</a></li>
+        <li><a href="trends.html">Trends</a></li>
+        <li><a href="playground.html">Analyze your own review</a></li>
+        <li><a href="how-it-works.html">How it works</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="wrap">
+    <h1>Resources</h1>
+    <p class="lede">Every link this project relies on: the project itself, the dataset, and the official documentation behind each decision.</p>
+    <p class="legend-badges" aria-label="Library labels used on this page">Results are labelled by the library that produced them:
+  <span class="badge badge-nltk" data-badge="nltk">NLTK</span>
+  <span class="badge badge-spacy" data-badge="spacy">spaCy</span>
+  <span class="badge badge-spacy-nltk" data-badge="spacy+nltk">spaCy + NLTK</span>
+  <span class="badge badge-metrics" data-badge="metrics">Metrics (proxy)</span></p>
+    <section class="panel" id="project-links">
+      <h2><span>This project</span></h2>
+      <ul class="links">
+        <li><a href="https://github.com/jsancheznunez/NLPFinal">GitHub repository: jsancheznunez/NLPFinal</a> &mdash; source code, schemas, tests</li>
+        <li><a href="https://github.com/jsancheznunez/NLPFinal/blob/main/docs/GUIDE.md">Step-by-step guide (docs/GUIDE.md)</a> &mdash; set up locally, prepare data, build, preview, deploy to Netlify</li>
+        <li><a href="https://github.com/jsancheznunez/NLPFinal/blob/main/README.md">README</a> &mdash; architecture and deploy steps</li>
+        <li><a href="https://github.com/jsancheznunez/NLPFinal/blob/main/docs/evaluation.md">Evaluation report (docs/evaluation.md)</a> &mdash; VADER vs. star ratings</li>
+      </ul>
+    </section>
+    <section class="panel" id="dataset-links">
+      <h2><span>Dataset</span></h2>
+      <ul class="links">
+        <li><a href="https://amazon-reviews-2023.github.io/">Amazon Reviews 2023 (McAuley Lab)</a> &mdash; dataset site</li>
+        <li><a href="https://arxiv.org/abs/2403.03952">Hou et al. (2024), arXiv:2403.03952</a> &mdash; dataset paper</li>
+        <li><a href="https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023">Hugging Face dataset card</a> &mdash; no license declared; academic, non-commercial use</li>
+      </ul>
+    </section>
+    <section class="panel">
+      <h2><span>NLTK</span></h2>
+      <ul class="links">
+        <li><a href="https://www.nltk.org/">NLTK documentation</a> &mdash; version 3.9.4</li>
+        <li><a href="https://www.nltk.org/api/nltk.sentiment.vader.html">nltk.sentiment.vader (SentimentIntensityAnalyzer)</a></li>
+        <li><a href="https://www.nltk.org/howto/sentiment.html">NLTK sentiment HOWTO</a></li>
+        <li><a href="https://www.nltk.org/api/nltk.tokenize.casual.html">TweetTokenizer (nltk.tokenize.casual)</a></li>
+        <li><a href="https://www.nltk.org/api/nltk.tokenize.punkt.html">Punkt sentence tokenizer</a></li>
+        <li><a href="https://www.nltk.org/api/nltk.probability.FreqDist.html">FreqDist</a></li>
+        <li><a href="https://www.nltk.org/howto/collocations.html">Collocations HOWTO</a></li>
+        <li><a href="https://www.nltk.org/howto/corpus.html">Corpus readers (stopwords)</a></li>
+        <li><a href="https://www.nltk.org/data.html">Installing NLTK data</a></li>
+      </ul>
+    </section>
+    <section class="panel">
+      <h2><span>VADER</span></h2>
+      <ul class="links">
+        <li><a href="https://github.com/cjhutto/vaderSentiment">VADER project README</a> &mdash; Hutto &amp; Gilbert (2014), ICWSM-14; scoring thresholds</li>
+      </ul>
+    </section>
+    <section class="panel">
+      <h2><span>spaCy and en_core_web_sm</span></h2>
+      <ul class="links">
+        <li><a href="https://spacy.io/usage/processing-pipelines">Processing pipelines (nlp.pipe)</a></li>
+        <li><a href="https://spacy.io/usage/linguistic-features">Linguistic features (lemmas, dependency parse, noun chunks, NER)</a></li>
+        <li><a href="https://spacy.io/usage/rule-based-matching">Rule-based matching</a></li>
+        <li><a href="https://spacy.io/api/entityruler">EntityRuler API</a></li>
+        <li><a href="https://spacy.io/usage/visualizers">displaCy visualizers</a></li>
+        <li><a href="https://spacy.io/models/en">English models (en_core_web_sm 3.8.0)</a></li>
+        <li><a href="https://spacy.io/usage/models">Installing models (requirements.txt wheel URL)</a></li>
+        <li><a href="https://github.com/explosion/spacy-models/releases/tag/en_core_web_sm-3.8.0">en_core_web_sm 3.8.0 release</a></li>
+      </ul>
+    </section>
+    <section class="panel">
+      <h2><span>Pyodide</span></h2>
+      <ul class="links">
+        <li><a href="https://pyodide.org/en/stable/usage/quickstart.html">Pyodide quickstart</a> &mdash; version 314.0.8</li>
+        <li><a href="https://pyodide.org/en/stable/usage/webworker.html">Using Pyodide in a Web Worker</a></li>
+        <li><a href="https://pyodide.org/en/stable/usage/loading-packages.html">Loading packages</a></li>
+        <li><a href="https://pyodide.org/en/stable/usage/packages-in-pyodide.html">Packages built in Pyodide (nltk 3.9.4)</a></li>
+        <li><a href="https://pyodide.org/en/stable/usage/file-system.html">Virtual file system</a></li>
+      </ul>
+    </section>
+    <section class="panel">
+      <h2><span>Netlify</span></h2>
+      <ul class="links">
+        <li><a href="https://docs.netlify.com/build/configure-builds/overview/">Build configuration overview</a></li>
+        <li><a href="https://docs.netlify.com/build/configure-builds/file-based-configuration/">File-based configuration (netlify.toml)</a></li>
+        <li><a href="https://docs.netlify.com/build/configure-builds/available-software-at-build-time/">Available software at build time (Python)</a></li>
+        <li><a href="https://docs.netlify.com/build/configure-builds/manage-dependencies/">Manage dependencies (PYTHON_VERSION, requirements.txt)</a></li>
+        <li><a href="https://docs.netlify.com/manage/routing/headers/">Custom headers</a></li>
+        <li><a href="https://docs.netlify.com/deploy/deploy-types/deploy-previews/">Deploy Previews</a></li>
+        <li><a href="https://docs.netlify.com/manage/accounts-and-billing/billing/billing-for-credit-based-plans/how-credits-work/">How credits work</a> &mdash; 15 credits per production deploy</li>
+        <li><a href="https://docs.netlify.com/build/functions/overview/">Functions overview</a> &mdash; TS/JS/Go only; not used here</li>
+      </ul>
+    </section>
+    <section class="panel">
+      <h2><span>pandas</span></h2>
+      <ul class="links">
+        <li><a href="https://pandas.pydata.org/docs/user_guide/groupby.html">Group by: split-apply-combine</a></li>
+        <li><a href="https://pandas.pydata.org/docs/reference/api/pandas.to_datetime.html">pandas.to_datetime</a></li>
+      </ul>
+    </section>
+    <section class="panel">
+      <h2><span>Chart.js</span></h2>
+      <ul class="links">
+        <li><a href="https://www.chartjs.org/docs/latest/getting-started/">Getting started</a> &mdash; pinned to 4.5.1</li>
+        <li><a href="https://www.chartjs.org/docs/latest/configuration/responsive.html">Responsive charts</a></li>
+        <li><a href="https://www.chartjs.org/docs/latest/general/accessibility.html">Accessibility</a></li>
+      </ul>
+    </section>
+    <section class="panel">
+      <h2><span>JSON Schema</span></h2>
+      <ul class="links">
+        <li><a href="https://json-schema.org/learn/getting-started-step-by-step">JSON Schema: getting started</a> &mdash; draft 2020-12</li>
+        <li><a href="https://python-jsonschema.readthedocs.io/en/stable/validate/">python-jsonschema: validation</a></li>
+      </ul>
+    </section>
+    <section class="panel">
+      <h2><span>Testing</span></h2>
+      <ul class="links">
+        <li><a href="https://docs.pytest.org/en/stable/getting-started.html">pytest: getting started</a></li>
+        <li><a href="https://docs.pytest.org/en/stable/how-to/fixtures.html">pytest fixtures</a></li>
+        <li><a href="https://playwright.dev/python/docs/intro">Playwright for Python</a></li>
+        <li><a href="https://playwright.dev/python/docs/test-runners">Playwright pytest plugin</a></li>
+      </ul>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav aria-label="Footer">
+        <a href="resources.html" id="footer-resources">Resources</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="https://github.com/jsancheznunez/NLPFinal">GitHub repository</a>
+        <a href="https://github.com/jsancheznunez/NLPFinal/blob/main/docs/GUIDE.md">Step-by-step guide</a>
+      </nav>
+      <p>NLP final project. <strong>NLTK</strong> (VADER, FreqDist, collocations) runs at build time and in your browser via Pyodide;
+        <strong>spaCy</strong> (NER, EntityRuler, noun chunks, dependency aspects) runs only in the Netlify build.
+        Sales figures are <strong>proxies</strong> (rating counts, review velocity); no simulated data is used.</p>
+      <p>Data: Amazon Reviews 2023, All_Beauty sample. Hou, Y., Li, J., He, Z., Yan, A., Chen, X., &amp; McAuley, J. (2024).
+        <em>Bridging Language and Items for Retrieval and Recommendation.</em> <a href="https://arxiv.org/abs/2403.03952">arXiv:2403.03952</a>.
+        No license is declared; used for academic, non-commercial purposes only.</p>
+    </div>
+  </footer>
+</body>
+</html>

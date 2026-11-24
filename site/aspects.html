@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aspects | Product Performance Analyzer</title>
+  <meta name="description" content="Ecommerce Product Performance Analyzer: NLTK + spaCy analysis of Amazon Reviews 2023 (All_Beauty), built on Netlify.">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+  <script src="assets/common.js" defer></script>
+  <script src="assets/aspects-trends.js" defer></script>
+</head>
+<body data-page="aspects">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">Product Performance Analyzer</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="aspects.html">Aspects</a></li>
+        <li><a href="trends.html">Trends</a></li>
+        <li><a href="playground.html">Analyze your own review</a></li>
+        <li><a href="how-it-works.html">How it works</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="wrap">
+    <h1>Aspects</h1>
+    <p class="lede">What customers talk about, and how they feel about it. <strong>spaCy</strong> finds aspects (noun chunks such as "battery life") and their opinions through the dependency parse; <strong>NLTK VADER</strong> scores each opinion.</p>
+    <p class="legend-badges" aria-label="Library labels used on this page">Results are labelled by the library that produced them:
+  <span class="badge badge-nltk" data-badge="nltk">NLTK</span>
+  <span class="badge badge-spacy" data-badge="spacy">spaCy</span>
+  <span class="badge badge-spacy-nltk" data-badge="spacy+nltk">spaCy + NLTK</span>
+  <span class="badge badge-metrics" data-badge="metrics">Metrics (proxy)</span></p>
+    <div id="aspects"></div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav aria-label="Footer">
+        <a href="resources.html" id="footer-resources">Resources</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="https://github.com/jsancheznunez/NLPFinal">GitHub repository</a>
+        <a href="https://github.com/jsancheznunez/NLPFinal/blob/main/docs/GUIDE.md">Step-by-step guide</a>
+      </nav>
+      <p>NLP final project. <strong>NLTK</strong> (VADER, FreqDist, collocations) runs at build time and in your browser via Pyodide;
+        <strong>spaCy</strong> (NER, EntityRuler, noun chunks, dependency aspects) runs only in the Netlify build.
+        Sales figures are <strong>proxies</strong> (rating counts, review velocity); no simulated data is used.</p>
+      <p>Data: Amazon Reviews 2023, All_Beauty sample. Hou, Y., Li, J., He, Z., Yan, A., Chen, X., &amp; McAuley, J. (2024).
+        <em>Bridging Language and Items for Retrieval and Recommendation.</em> <a href="https://arxiv.org/abs/2403.03952">arXiv:2403.03952</a>.
+        No license is declared; used for academic, non-commercial purposes only.</p>
+    </div>
+  </footer>
+</body>
+</html>
