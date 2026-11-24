@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How it works | Product Performance Analyzer</title>
+  <meta name="description" content="Ecommerce Product Performance Analyzer: NLTK + spaCy analysis of Amazon Reviews 2023 (All_Beauty), built on Netlify.">
+  <link rel="stylesheet" href="assets/style.css">
+  
+  <script src="assets/common.js" defer></script>
+  <script src="assets/how-it-works.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">Product Performance Analyzer</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="aspects.html">Aspects</a></li>
+        <li><a href="trends.html">Trends</a></li>
+        <li><a href="playground.html">Analyze your own review</a></li>
+        <li><a href="how-it-works.html">How it works</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="wrap">
+    <h1>How it works</h1>
+    <p class="lede">Everything is computed on Netlify at build time, except the playground, which runs NLTK in your browser.</p>
+    <p class="legend-badges" aria-label="Library labels used on this page">Results are labelled by the library that produced them:
+  <span class="badge badge-nltk" data-badge="nltk">NLTK</span>
+  <span class="badge badge-spacy" data-badge="spacy">spaCy</span>
+  <span class="badge badge-spacy-nltk" data-badge="spacy+nltk">spaCy + NLTK</span>
+  <span class="badge badge-metrics" data-badge="metrics">Metrics (proxy)</span></p>
+    <section class="panel" data-source="metrics">
+      <h2><span>Pipeline</span></h2>
+      <ol>
+        <li><strong>Data.</strong> A committed sample of Amazon Reviews 2023 (All_Beauty): reviews and metadata joined on <code>parent_asin</code> (<code>data/sample/</code>).</li>
+        <li><span class="badge badge-spacy" data-badge="spacy">spaCy</span> <code>en_core_web_sm</code> 3.8.0 runs once over every review with <code>nlp.pipe</code>: lemmas, sentences, named entities (plus an <code>EntityRuler</code> placed before <code>ner</code> with BRAND/PRODUCT phrase patterns from the metadata), noun chunks, and dependency rules (<code>amod</code>; <code>acomp</code> + <code>nsubj</code>; opinion verb + <code>dobj</code>; <code>conj</code>; <code>neg</code>) that yield (aspect, opinion, negated) pairs.</li>
+        <li><span class="badge badge-nltk" data-badge="nltk">NLTK</span> 3.9.4: VADER scores each review and each aspect opinion (positive &ge; 0.05, negative &le; &minus;0.05); FreqDist counts spaCy lemmas; bigram collocations are ranked by likelihood ratio with a frequency filter, separately for positive and negative reviews. The stopword list is NLTK English minus negations plus ecommerce noise words.</li>
+        <li><span class="badge badge-metrics" data-badge="metrics">Metrics (proxy)</span> pandas computes the best-seller proxy, Bayesian rating, review velocity, the performance score and opportunity flags.</li>
+        <li>Every JSON file is validated against <code>schemas/*.schema.json</code> and written to <code>site/data/</code>; Netlify publishes <code>site/</code>.</li>
+      </ol>
+    </section>
+    <section class="panel" data-source="metrics" id="score">
+      <h2><span>Performance score and opportunity flags</span> <span class="badge badge-metrics" data-badge="metrics">Metrics (proxy)</span></h2>
+      <p><strong>There are no sales figures in the dataset.</strong> "Best-seller" means most-rated (<code>rating_number</code>), a proxy.</p>
+      <ul>
+        <li><strong>Bayesian rating</strong> = (v&middot;R + m&middot;C) / (v + m), with v reviews, product mean R, category mean C, m = 20.</li>
+        <li><strong>Review velocity</strong> = (reviews in the last 6 months + 1) / (reviews in the 6 months before + 1), relative to the latest review date in the sample.</li>
+        <li><strong>Score</strong> = 0.35&middot;z(log(1 + rating_number)) + 0.25&middot;z(Bayesian rating) + 0.25&middot;z(mean VADER compound) + 0.15&middot;z(log velocity).</li>
+        <li><strong>Fix the top complaint</strong>: top 25% popularity but bottom 25% sentiment or adjusted rating. <strong>Under-marketed gem</strong>: top 25% sentiment, below-median popularity. <strong>Trending</strong>: velocity &ge; 1.5 with 5+ recent reviews in the sample. <strong>Price/value mismatch</strong>: 3+ negative price/value aspect or MONEY mentions.</li>
+      </ul>
+    </section>
+    <section class="panel" data-source="spacy" id="displacy">
+      <h2><span>displaCy: dependency parses and entities</span> <span class="badge badge-spacy" data-badge="spacy">spaCy</span></h2>
+      <p class="muted">Pre-rendered at build time with <code>displacy.render</code> (no server). Sentences come from the sample.</p>
+      <div id="displacy-list"><p class="muted">Loading&hellip;</p></div>
+      <h3>Entities</h3>
+      <iframe class="displacy" src="displacy/entities.html" title="displaCy entity visualization of the example sentences"></iframe>
+    </section>
+    <section class="panel" data-source="nltk">
+      <h2><span>Live analysis</span> <span class="badge badge-nltk" data-badge="nltk">NLTK</span></h2>
+      <p>The <a href="playground.html">playground</a> loads Pyodide 314.0.8 from jsDelivr in a module Web Worker, loads the <code>nltk</code> package, mounts the VADER, stopwords and Punkt zips served from this site, and imports <code>py/nltk_layer.py</code>, the same file the build runs. spaCy cannot run in Pyodide, so spaCy results are only shown for the precomputed dataset.</p>
+    </section>
+    <section class="panel" data-source="metrics">
+      <h2><span>This build</span></h2>
+      <div id="build-info"><p class="muted">Loading&hellip;</p></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav aria-label="Footer">
+        <a href="resources.html" id="footer-resources">Resources</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="https://github.com/jsancheznunez/NLPFinal">GitHub repository</a>
+        <a href="https://github.com/jsancheznunez/NLPFinal/blob/main/docs/GUIDE.md">Step-by-step guide</a>
+      </nav>
+      <p>NLP final project. <strong>NLTK</strong> (VADER, FreqDist, collocations) runs at build time and in your browser via Pyodide;
+        <strong>spaCy</strong> (NER, EntityRuler, noun chunks, dependency aspects) runs only in the Netlify build.
+        Sales figures are <strong>proxies</strong> (rating counts, review velocity); no simulated data is used.</p>
+      <p>Data: Amazon Reviews 2023, All_Beauty sample. Hou, Y., Li, J., He, Z., Yan, A., Chen, X., &amp; McAuley, J. (2024).
+        <em>Bridging Language and Items for Retrieval and Recommendation.</em> <a href="https://arxiv.org/abs/2403.03952">arXiv:2403.03952</a>.
+        No license is declared; used for academic, non-commercial purposes only.</p>
+    </div>
+  </footer>
+</body>
+</html>

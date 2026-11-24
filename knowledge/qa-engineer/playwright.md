@@ -34,3 +34,7 @@ def test_has_title(page: Page):
 
 ## Console errors
 Collect them with `page.on("console", lambda m: errors.append(m) if m.type == "error" else None)` and assert the list is empty at the end of each test.
+
+## Version and browser matching (verified Nov 24 2026)
+- Each Playwright release pins one browser build in `playwright/driver/package/browsers.json`. Checked: **1.63.0 → chromium-headless-shell 1243**, 1.64.0 → 1248, 1.65.x → 1255. The cloud sandbox ships `/opt/pw-browsers/chromium*-1243` (`PLAYWRIGHT_BROWSERS_PATH`), so `requirements-dev.txt` pins `playwright==1.63.0`. A mismatch fails with "Executable doesn't exist ... run playwright install".
+- Behind an HTTPS proxy, pass it at launch: `browser_type_launch_args` → `{"proxy": {"server": os.environ["HTTPS_PROXY"], "bypass": "127.0.0.1,localhost"}}` (https://playwright.dev/python/docs/network#http-proxy). The local `http.server` stays direct.

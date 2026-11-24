@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nlpfinal.local/schemas/nltk_examples.schema.json",
+  "title": "nltk_examples.json: build-time NLTK results for sample texts",
+  "description": "Used by the playground's 'try an example' buttons and by the build-vs-browser parity test (scores must match within 1e-4).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source",
+    "nltk_version",
+    "items"
+  ],
+  "properties": {
+    "source": {
+      "const": "nltk"
+    },
+    "nltk_version": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "text",
+          "rating",
+          "result"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "rating": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "result": {
+            "$ref": "nltk_analysis.schema.json"
+          }
+        }
+      }
+    }
+  }
+}

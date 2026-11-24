@@ -48,3 +48,8 @@ Negations ("not good"), contractions as negations ("wasn't very good"), punctuat
 - For aspect pairs from spaCy, score the opinion phrase (prefix "not " if negated) or the containing sentence.
 - Use the standard ±0.05 thresholds everywhere (build and Pyodide) so labels match.
 - Build one `SentimentIntensityAnalyzer` and reuse it. Constructing one per sentence, as the HOWTO loop does, is slow.
+
+## Project lexicon check (nltk 3.9.4 vader_lexicon, verified Nov 24 2026)
+- **Missing** from the lexicon: flimsy, cheap, greasy, sticky, leaky, overpriced, smelly, soft, smooth, silky, sturdy, durable, moisturizing. **Present**: dead -3.3, broken -2.1, broke -1.8, defective -1.9, leaked -1.3, itchy -1.1, dull -1.7, gentle 1.9, flawless 2.3, okay 0.9.
+- `nltk_layer.DOMAIN_LEXICON` adds the missing ones with `sia.lexicon.setdefault`, so VADER's own ratings are never changed. It is shared by the build and Pyodide. Effect on macro-F1: 0.500 → 0.507 (docs/evaluation.md).
+- `punkt_tab.zip` is 4.3 MB (all languages). The build ships an English-only subset (`punkt_tab/english/`) to the browser. `PunktTokenizer("english")` only reads `tokenizers/punkt_tab/english/`.

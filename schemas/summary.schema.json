@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nlpfinal.local/schemas/summary.schema.json",
+  "title": "summary.json: category dashboard",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dataset",
+    "metric_kind",
+    "nltk",
+    "spacy",
+    "aspects",
+    "metrics"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "metric_kind": {
+      "const": "proxy"
+    },
+    "dataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "category",
+        "citation",
+        "url",
+        "license_note",
+        "data_as_of",
+        "n_products",
+        "n_reviews",
+        "simulated"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "citation": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "license_note": {
+          "type": "string"
+        },
+        "data_as_of": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "n_products": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "n_reviews": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "simulated": {
+          "const": false
+        }
+      }
+    },
+    "nltk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "method",
+        "thresholds",
+        "mean_compound",
+        "sentiment_mix",
+        "top_terms",
+        "collocations"
+      ],
+      "properties": {
+        "source": {
+          "const": "nltk"
+        },
+        "method": {
+          "type": "string"
+        },
+        "thresholds": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "positive",
+            "negative"
+          ],
+          "properties": {
+            "positive": {
+              "const": 0.05
+            },
+            "negative": {
+              "const": -0.05
+            }
+          }
+        },
+        "mean_compound": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "sentiment_mix": {
+          "$ref": "nltk_analysis.schema.json#/$defs/sentiment_mix"
+        },
+        "top_terms": {
+          "$ref": "nltk_analysis.schema.json#/$defs/term_split"
+        },
+        "collocations": {
+          "$ref": "nltk_analysis.schema.json#/$defs/collocation_split"
+        }
+      }
+    },
+    "spacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "model",
+        "top_entities",
+        "top_brands",
+        "top_noun_chunks",
+        "n_entities"
+      ],
+      "properties": {
+        "source": {
+          "const": "spacy"
+        },
+        "model": {
+          "type": "string"
+        },
+        "n_entities": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "top_entities": {
+          "type": "array",
+          "items": {
+            "$ref": "nltk_analysis.schema.json#/$defs/entity_item"
+          }
+        },
+        "top_brands": {
+          "type": "array",
+          "items": {
+            "$ref": "nltk_analysis.schema.json#/$defs/count_item"
+          }
+        },
+        "top_noun_chunks": {
+          "type": "array",
+          "items": {
+            "$ref": "nltk_analysis.schema.json#/$defs/count_item"
+          }
+        }
+      }
+    },
+    "aspects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "n_pairs",
+        "top_negative",
+        "top_positive"
+      ],
+      "properties": {
+        "source": {
+          "const": "spacy+nltk"
+        },
+        "n_pairs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "top_negative": {
+          "type": "array",
+          "items": {
+            "$ref": "nltk_analysis.schema.json#/$defs/aspect"
+          }
+        },
+        "top_positive": {
+          "type": "array",
+          "items": {
+            "$ref": "nltk_analysis.schema.json#/$defs/aspect"
+          }
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "metric_kind",
+        "weights",
+        "weights_note",
+        "best_sellers",
+        "top_performers",
+        "opportunities"
+      ],
+      "properties": {
+        "source": {
+          "const": "metrics"
+        },
+        "metric_kind": {
+          "const": "proxy"
+        },
+        "weights": {
+          "$ref": "products.schema.json#/$defs/weights"
+        },
+        "weights_note": {
+          "type": "string"
+        },
+        "best_sellers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "top_performers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "opportunities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "parent_asin",
+              "flag",
+              "reason"
+            ],
+            "properties": {
+              "parent_asin": {
+                "type": "string"
+              },
+              "flag": {
+                "$ref": "products.schema.json#/$defs/flag"
+              },
+              "reason": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

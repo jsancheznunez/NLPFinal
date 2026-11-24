@@ -1,0 +1,43 @@
+"$schema" = "https://open-api.netlify.com/netlify.schema.json"
+
+# Netlify installs requirements.txt with pip automatically (Python from PYTHON_VERSION),
+# then runs the NLP pipeline. Only the publish directory (site/) is deployed.
+[build]
+  command = "python scripts/build_analysis.py"
+  publish = "site"
+
+[build.environment]
+  PYTHON_VERSION = "3.12"
+  # build_analysis.py downloads vader_lexicon, stopwords and punkt_tab here once per build
+  NLTK_DATA_DIR = "nltk_data"
+  BUILD_BUDGET_SECONDS = "600"
+
+# No Netlify Functions are used (Python is not a Functions language).
+# No COOP/COEP headers: single-threaded Pyodide does not need cross-origin isolation,
+# and COEP could block the jsDelivr CDN.
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/py/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/nltk_data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/assets/*.mjs"
+  [headers.values]
+    Content-Type = "text/javascript; charset=utf-8"

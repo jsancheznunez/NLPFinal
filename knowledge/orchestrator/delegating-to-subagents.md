@@ -39,3 +39,6 @@ Use the main conversation when "The task needs frequent back-and-forth", when "M
 
 ## Agent teams vs subagents
 - "Use subagents when you need quick, focused workers that report back. Use agent teams when teammates need to share findings, challenge each other, and coordinate on their own." Agent teams "use significantly more tokens". **This project uses subagents coordinated by the orchestrator.**
+
+## Observed in this project (Nov 24 2026)
+- When the orchestrator itself runs **as a subagent**, its tool list may not include the Agent/Task tool, even though the docs allow nesting ("up to three layers below the main conversation"). Spawning is decided by the tools the parent grants. Check the tool list first. If spawning is unavailable, do the roles **sequentially yourself in wave order**, reading each owner's `knowledge/<agent>/` notes and keeping their file boundaries, and say so in the status report. Source: https://code.claude.com/docs/en/sub-agents (nesting, tool access), plus a direct check of this session's tools.

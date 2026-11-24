@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nlpfinal.local/schemas/product.schema.json",
+  "title": "product/<parent_asin>.json: one product in detail",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "parent_asin",
+    "title",
+    "store",
+    "price",
+    "metrics",
+    "nltk",
+    "spacy",
+    "aspects"
+  ],
+  "properties": {
+    "parent_asin": {
+      "type": "string",
+      "pattern": "^[A-Z0-9]{10}$"
+    },
+    "title": {
+      "type": "string"
+    },
+    "store": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "price": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "metrics": {
+      "allOf": [
+        {
+          "$ref": "products.schema.json#/$defs/metrics_section"
+        }
+      ],
+      "unevaluatedProperties": false,
+      "properties": {
+        "monthly": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "month",
+              "n_reviews",
+              "mean_rating"
+            ],
+            "properties": {
+              "month": {
+                "$ref": "nltk_analysis.schema.json#/$defs/month"
+              },
+              "n_reviews": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "mean_rating": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "rating_histogram": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "properties": {
+            "1": {
+              "type": "integer"
+            },
+            "2": {
+              "type": "integer"
+            },
+            "3": {
+              "type": "integer"
+            },
+            "4": {
+              "type": "integer"
+            },
+            "5": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "required": [
+        "monthly",
+        "rating_histogram"
+      ]
+    },
+    "nltk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "mean_compound",
+        "pct_negative",
+        "sentiment_mix",
+        "top_terms",
+        "collocations",
+        "monthly_sentiment",
+        "examples"
+      ],
+      "properties": {
+        "source": {
+          "const": "nltk"
+        },
+        "mean_compound": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "pct_negative": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "sentiment_mix": {
+          "$ref": "nltk_analysis.schema.json#/$defs/sentiment_mix"
+        },
+        "top_terms": {
+          "$ref": "nltk_analysis.schema.json#/$defs/term_split"
+        },
+        "collocations": {
+          "$ref": "nltk_analysis.schema.json#/$defs/collocation_split"
+        },
+        "monthly_sentiment": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "month",
+              "n_reviews",
+              "mean_compound"
+            ],
+            "properties": {
+              "month": {
+                "$ref": "nltk_analysis.schema.json#/$defs/month"
+              },
+              "n_reviews": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "mean_compound": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "examples": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "most_helpful_positive",
+            "most_helpful_negative"
+          ],
+          "properties": {
+            "most_helpful_positive": {
+              "$ref": "nltk_analysis.schema.json#/$defs/review_example"
+            },
+            "most_helpful_negative": {
+              "$ref": "nltk_analysis.schema.json#/$defs/review_example"
+            }
+          }
+        }
+      }
+    },
+    "spacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "model",
+        "n_entities",
+        "entities",
+        "brands",
+        "products",
+        "noun_chunks"
+      ],
+      "properties": {
+        "source": {
+          "const": "spacy"
+        },
+        "model": {
+          "type": "string"
+        },
+        "n_entities": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "entities": {
+          "type": "array",
+          "items": {
+            "$ref": "nltk_analysis.schema.json#/$defs/entity_item"
+          }
+        },
+        "brands": {
+          "type": "array",
+          "items": {
+            "$ref": "nltk_analysis.schema.json#/$defs/count_item"
+          }
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "nltk_analysis.schema.json#/$defs/count_item"
+          }
+        },
+        "noun_chunks": {
+          "type": "array",
+          "items": {
+            "$ref": "nltk_analysis.schema.json#/$defs/count_item"
+          }
+        }
+      }
+    },
+    "aspects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "n_pairs",
+        "items"
+      ],
+      "properties": {
+        "source": {
+          "const": "spacy+nltk"
+        },
+        "n_pairs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "nltk_analysis.schema.json#/$defs/aspect"
+          }
+        }
+      }
+    }
+  }
+}
