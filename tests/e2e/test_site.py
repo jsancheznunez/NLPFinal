@@ -16,6 +16,10 @@ PAGES = ["index.html", "products.html", "product.html", "aspects.html", "trends.
          "playground.html", "how-it-works.html", "resources.html"]
 
 
+# Netlify's "Pretty URLs" post-processing rewrites resources.html links to /resources on deploy.
+RES_LINK = "a[href$='resources.html'], a[href$='/resources']"
+
+
 @pytest.fixture
 def console_errors(page: Page):
     errors = []
@@ -29,16 +33,16 @@ def test_page_has_labels_and_resources_link(page: Page, site_server, name, conso
     page.goto(f"{site_server}/{name}")
     expect(page.locator(".legend-badges [data-badge='nltk']")).to_have_text("NLTK")
     expect(page.locator(".legend-badges [data-badge='spacy']")).to_have_text("spaCy")
-    expect(page.locator("header .site-nav a[href='resources.html']")).to_be_visible()
-    expect(page.locator("footer a[href='resources.html']")).to_be_visible()
+    expect(page.locator("header .site-nav").locator(RES_LINK)).to_be_visible()
+    expect(page.locator("footer").locator(RES_LINK)).to_be_visible()
     page.wait_for_load_state("networkidle") if name != "playground.html" else None
     assert not [e for e in console_errors if "favicon" not in e], console_errors
 
 
 def test_resources_link_works(page: Page, site_server):
     page.goto(f"{site_server}/index.html")
-    page.locator("footer a[href='resources.html']").click()
-    expect(page).to_have_url(re.compile(r"resources\.html$"))
+    page.locator("footer").locator(RES_LINK).click()
+    expect(page).to_have_url(re.compile(r"resources(\.html)?$"))
     expect(page.get_by_role("heading", name="Resources", exact=True)).to_be_visible()
     for href in ["https://github.com/jsancheznunez/NLPFinal",
                  "https://github.com/jsancheznunez/NLPFinal/blob/main/docs/GUIDE.md",

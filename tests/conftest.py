@@ -35,7 +35,15 @@ def nlp():
 
 @pytest.fixture(scope="session")
 def site_server():
-    """Serve site/ like `python -m http.server -d site` on a free port."""
+    """Serve site/ like `python -m http.server -d site` on a free port.
+
+    Set SITE_URL (e.g. https://nlpfinal-product-analyzer.netlify.app) to run the e2e tests
+    against a deployed site instead. The playground test still compares with the local
+    site/data/nltk_examples.json, so build locally from the same commit first.
+    """
+    if os.environ.get("SITE_URL"):
+        yield os.environ["SITE_URL"].rstrip("/")
+        return
     if not (SITE / "data" / "summary.json").exists():
         pytest.skip("site/data not built; run python scripts/build_analysis.py first")
     handler = functools.partial(QuietHandler, directory=str(SITE))

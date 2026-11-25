@@ -89,7 +89,8 @@ A local build of the full sample takes about 45 s (spaCy about 35 s of that) and
    - publish directory `site`
    - `PYTHON_VERSION = "3.12"`. Netlify installs `requirements.txt` with pip automatically, including the `en_core_web_sm` wheel from GitHub Releases.
 4. Click **Deploy**. The build log shows each stage's timing (`[build] spacy: ...`) and fails if any JSON file breaks its schema.
-5. **Deploy Previews:** every pull request gets a free preview URL. Test there, for example with `pytest tests/e2e --base-url <preview-url>` after adapting the server fixture, or by hand.
+5. **Deploy Previews:** every pull request gets a free preview URL. Test there with `SITE_URL=<preview-url> pytest tests/e2e --tracing off` (the same 14 Playwright tests, run against the deployed site; build locally from the same commit first so the playground scores can be compared).
+6. **Live site:** https://nlpfinal-product-analyzer.netlify.app. Verified with `SITE_URL=https://nlpfinal-product-analyzer.netlify.app pytest tests/e2e --tracing off`, 14 passed. For docs- or test-only commits to `main`, put `[skip netlify]` in the commit message to skip the 15-credit production deploy.
 6. **Credits:** on credit-based plans each **production deploy costs 15 credits** (Free plan: 300 credits a month), while Deploy Previews cost none. Merge to `main` only at milestones.
 
 No environment variables, secrets, Functions or extra headers need to be set in the Netlify UI. Pyodide is loaded from the jsDelivr CDN, and no COOP/COEP headers are needed.

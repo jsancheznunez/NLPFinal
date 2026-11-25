@@ -65,6 +65,7 @@ Open http://localhost:8000. Check that:
 ```bash
 pytest tests --ignore=tests/e2e        # 66 tests: NLTK/spaCy layers, metrics, schemas, deterministic build
 pytest tests/e2e --tracing off         # 14 Playwright tests in Chromium against a local server
+SITE_URL=https://nlpfinal-product-analyzer.netlify.app pytest tests/e2e --tracing off   # same tests against the live site
 ```
 
 On a new machine, run `python -m playwright install chromium` once first. `requirements-dev.txt` pins Playwright 1.63.0, so adjust the pin if your installed browsers come from a different version.
